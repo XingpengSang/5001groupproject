@@ -1,0 +1,12 @@
+SPOTIFY DATASET AUDIT SUMMARY
+========================================
+Rows: 170653
+Columns: 19
+Missing cells: 0
+Fully duplicated rows: 0
+Popularity mean: 31.43
+Popularity median: 33.00
+Popularity standard deviation: 21.83
+Popularity = 0 count: 27892
+Minimum year: 1921
+Maximum year: 2020

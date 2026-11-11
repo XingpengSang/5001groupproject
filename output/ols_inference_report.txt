@@ -1,0 +1,63 @@
+OLS STATISTICAL INFERENCE REPORT
+======================================================================
+
+Standard errors: HC3 heteroscedasticity-robust
+Training split: 80%, random_state=42
+Categorical variable: key (one-hot encoded)
+
+MODEL STATISTICS
+     Feature_Group  Observations  Number_of_Predictors_Including_Dummies  R_squared  Adjusted_R_squared  Robust_F_statistic  Robust_F_p_value
+     Group_A_Audio        136522                                      23   0.449958            0.449865         5562.590343               0.0
+Group_B_Audio_Year        136522                                      24   0.752251            0.752208        21216.430630               0.0
+
+COEFFICIENT RESULTS
+     Feature_Group         Variable  Coefficient  Robust_SE  t_statistic       p_value  CI_Lower_95  CI_Upper_95    Significance
+     Group_A_Audio            const    22.489715   1.531445    14.685293  8.008679e-49    19.488139    25.491292             ***
+     Group_A_Audio     danceability    21.692131   0.366970    59.111465  0.000000e+00    20.972883    22.411379             ***
+     Group_A_Audio           energy    10.669626   0.394619    27.037819 5.312061e-161     9.896188    11.443065             ***
+     Group_A_Audio         loudness     0.231582   0.016471    14.059595  6.726970e-45     0.199299     0.263866             ***
+     Group_A_Audio     acousticness   -21.127520   0.204172  -103.478882  0.000000e+00   -21.527690   -20.727349             ***
+     Group_A_Audio instrumentalness    -8.730450   0.168900   -51.690120  0.000000e+00    -9.061488    -8.399413             ***
+     Group_A_Audio         liveness    -7.953480   0.251705   -31.598384 3.885731e-219    -8.446813    -7.460146             ***
+     Group_A_Audio      speechiness   -33.928117   0.297707  -113.964685  0.000000e+00   -34.511613   -33.344622             ***
+     Group_A_Audio          valence   -18.807065   0.239231   -78.614692  0.000000e+00   -19.275949   -18.338181             ***
+     Group_A_Audio            tempo     0.025980   0.001531    16.965015  1.490612e-64     0.022979     0.028982             ***
+     Group_A_Audio     log_duration     1.462239   0.114341    12.788409  1.903307e-37     1.238135     1.686343             ***
+     Group_A_Audio         explicit     9.362757   0.181798    51.500755  0.000000e+00     9.006439     9.719075             ***
+     Group_A_Audio             mode    -0.031532   0.100252    -0.314524  7.531229e-01    -0.228022     0.164959 Not significant
+     Group_A_Audio            key_1     0.519583   0.208867     2.487626  1.285990e-02     0.110211     0.928954               *
+     Group_A_Audio            key_2    -0.316900   0.179779    -1.762721  7.794748e-02    -0.669260     0.035460 Not significant
+     Group_A_Audio            key_3    -0.917578   0.250310    -3.665765  2.466001e-04    -1.408176    -0.426979             ***
+     Group_A_Audio            key_4     0.467967   0.201896     2.317861  2.045689e-02     0.072258     0.863677               *
+     Group_A_Audio            key_5     0.134270   0.188675     0.711647  4.766835e-01    -0.235526     0.504065 Not significant
+     Group_A_Audio            key_6     0.885665   0.231496     3.825832  1.303309e-04     0.431941     1.339389             ***
+     Group_A_Audio            key_7    -0.054363   0.175844    -0.309153  7.572048e-01    -0.399011     0.290286 Not significant
+     Group_A_Audio            key_8     0.017839   0.214588     0.083132  9.337463e-01    -0.402745     0.438423 Not significant
+     Group_A_Audio            key_9    -0.154513   0.182126    -0.848384  3.962241e-01    -0.511474     0.202448 Not significant
+     Group_A_Audio           key_10     0.022692   0.206010     0.110148  9.122918e-01    -0.381081     0.426464 Not significant
+     Group_A_Audio           key_11    -0.053965   0.216954    -0.248738  8.035634e-01    -0.479186     0.371257 Not significant
+Group_B_Audio_Year            const -1290.132074   3.333940  -386.969246  0.000000e+00 -1296.666476 -1283.597673             ***
+Group_B_Audio_Year     danceability     2.533824   0.258789     9.791069  1.229883e-22     2.026606     3.041042             ***
+Group_B_Audio_Year           energy    -1.734501   0.245253    -7.072293  1.523943e-12    -2.215189    -1.253814             ***
+Group_B_Audio_Year         loudness     0.011291   0.008737     1.292400  1.962188e-01    -0.005832     0.028415 Not significant
+Group_B_Audio_Year     acousticness    -4.088597   0.136087   -30.044079 2.608911e-198    -4.355322    -3.821872             ***
+Group_B_Audio_Year instrumentalness    -4.261269   0.117240   -36.346503 2.984147e-289    -4.491055    -4.031482             ***
+Group_B_Audio_Year         liveness    -3.024949   0.170264   -17.766242  1.290529e-70    -3.358661    -2.691238             ***
+Group_B_Audio_Year      speechiness    -7.564937   0.190160   -39.781858  0.000000e+00    -7.937644    -7.192229             ***
+Group_B_Audio_Year          valence     0.908960   0.172288     5.275812  1.321699e-07     0.571281     1.246638             ***
+Group_B_Audio_Year            tempo     0.001531   0.000987     1.551022  1.208964e-01    -0.000404     0.003465 Not significant
+Group_B_Audio_Year     log_duration     0.469483   0.068868     6.817171  9.285054e-12     0.334504     0.604461             ***
+Group_B_Audio_Year         explicit     1.089511   0.119826     9.092438  9.684252e-20     0.854656     1.324366             ***
+Group_B_Audio_Year             mode    -0.174997   0.067066    -2.609327  9.072052e-03    -0.306444    -0.043550              **
+Group_B_Audio_Year             year     0.667212   0.001612   414.004734  0.000000e+00     0.664053     0.670371             ***
+Group_B_Audio_Year            key_1    -0.117454   0.138925    -0.845449  3.978602e-01    -0.389742     0.154834 Not significant
+Group_B_Audio_Year            key_2    -0.112612   0.122026    -0.922859  3.560808e-01    -0.351778     0.126553 Not significant
+Group_B_Audio_Year            key_3    -0.123575   0.162412    -0.760875  4.467317e-01    -0.441897     0.194747 Not significant
+Group_B_Audio_Year            key_4     0.266445   0.138233     1.927511  5.391596e-02    -0.004486     0.537377 Not significant
+Group_B_Audio_Year            key_5     0.188326   0.123994     1.518830  1.288053e-01    -0.054698     0.431351 Not significant
+Group_B_Audio_Year            key_6     0.003609   0.155089     0.023269  9.814354e-01    -0.300360     0.307578 Not significant
+Group_B_Audio_Year            key_7    -0.111744   0.119242    -0.937121  3.486963e-01    -0.345453     0.121965 Not significant
+Group_B_Audio_Year            key_8    -0.042785   0.141605    -0.302140  7.625455e-01    -0.320325     0.234756 Not significant
+Group_B_Audio_Year            key_9     0.239424   0.125379     1.909606  5.618393e-02    -0.006314     0.485163 Not significant
+Group_B_Audio_Year           key_10    -0.072056   0.135915    -0.530156  5.960037e-01    -0.338446     0.194333 Not significant
+Group_B_Audio_Year           key_11    -0.544476   0.151545    -3.592840  3.270935e-04    -0.841498    -0.247454             ***

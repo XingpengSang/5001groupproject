@@ -1,0 +1,15 @@
+﻿feature,group_a,group_b
+danceability,True,True
+energy,True,True
+loudness,True,True
+acousticness,True,True
+instrumentalness,True,True
+liveness,True,True
+speechiness,True,True
+valence,True,True
+tempo,True,True
+log_duration,True,True
+explicit,True,True
+key,True,True
+mode,True,True
+year,False,True

@@ -1,0 +1,5 @@
+﻿Feature_Group,Model,Best_Alpha,Best_CV_RMSE
+Group_A_Audio,Ridge,100.0,16.18179339377312
+Group_A_Audio,Lasso,0.01,16.181451418189898
+Group_B_Audio_Year,Ridge,10.0,10.859601235541797
+Group_B_Audio_Year,Lasso,0.001,10.859548259537556

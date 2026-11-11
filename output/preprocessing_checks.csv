@@ -1,0 +1,8 @@
+﻿check,problem_count
+Missing target values,0
+"Popularity outside [0, 100]",0
+"Invalid year outside [1921, 2020]",0
+"Invalid key outside [0, 11]",0
+Invalid mode values,0
+Invalid explicit values,0
+Non-positive duration,0

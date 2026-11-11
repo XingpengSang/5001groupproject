@@ -1,0 +1,20 @@
+SPOTIFY DATA PREPROCESSING SUMMARY
+==================================================
+Original rows: 170653
+Processed rows: 170653
+Processed columns: 15
+Invalid tempo values converted to missing: 143
+Popularity zero values retained: 27892
+Popularity mean: 31.4318
+Popularity standard deviation: 21.8266
+Group A feature count: 13
+Group B feature count: 14
+
+Important notes:
+1. Original data was not modified.
+2. Popularity = 0 observations were retained.
+3. Non-positive tempo values were converted to missing.
+4. Duration was log-transformed.
+5. Key will be one-hot encoded during modeling.
+6. Standardization and imputation will be performed
+   inside the modeling pipeline to avoid data leakage.

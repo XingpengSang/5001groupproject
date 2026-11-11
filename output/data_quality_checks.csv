@@ -1,0 +1,11 @@
+﻿check,problem_count
+Non-positive duration,0
+Non-positive tempo,143
+"energy outside [0, 1]",0
+"danceability outside [0, 1]",0
+"acousticness outside [0, 1]",0
+"instrumentalness outside [0, 1]",0
+"liveness outside [0, 1]",0
+"speechiness outside [0, 1]",0
+"valence outside [0, 1]",0
+"Popularity outside [0, 100]",0
