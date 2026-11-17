@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 # 1. Path configuration
 # ============================================================
 
-PROJECT_DIR = Path(r"D:\5001groupproject")
+PROJECT_DIR = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = PROJECT_DIR / "output"
 
 INPUT_FILE = OUTPUT_DIR / "spotify_modeling_data.csv"
@@ -69,7 +69,8 @@ group_b_features = group_a_features + ["year"]
 
 feature_groups = {
     "Group_A_Audio": group_a_features,
-    "Group_B_Audio_Year": group_b_features
+    "Group_B_Audio_Year": group_b_features,
+    "Group_C_Year": ["year"]
 }
 
 # Check required columns
@@ -112,7 +113,7 @@ print("Random state: 42")
 def build_preprocessor(features):
 
     # Key is categorical, not continuous.
-    categorical_features = ["key"]
+    categorical_features = ["key"] if "key" in features else []
 
     numeric_features = [
         col for col in features
@@ -401,3 +402,4 @@ print(f"Results saved to: {OUTPUT_DIR}")
 print("1. model_evaluation_results.csv")
 print("2. best_model_parameters.csv")
 print("3. model_test_predictions.csv")
+

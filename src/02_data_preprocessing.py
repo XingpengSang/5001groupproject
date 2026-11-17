@@ -7,7 +7,7 @@ import numpy as np
 # 1. Path configuration
 # ============================================================
 
-PROJECT_DIR = Path(r"D:\5001groupproject")
+PROJECT_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_DIR / "Dataset"
 OUTPUT_DIR = PROJECT_DIR / "output"
 
@@ -303,3 +303,4 @@ print("=" * 65)
 
 print(f"Processed shape: {data.shape}")
 print(f"Output directory: {OUTPUT_DIR}")
+
