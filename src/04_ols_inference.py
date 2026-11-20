@@ -4,6 +4,7 @@ import warnings
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
 from sklearn.model_selection import train_test_split
@@ -14,7 +15,7 @@ warnings.filterwarnings("ignore")
 # 1. PATHS AND SETTINGS
 # ============================================================
 
-PROJECT_DIR = Path(r"D:\5001groupproject")
+PROJECT_DIR = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = PROJECT_DIR / "output"
 
 INPUT_FILE = OUTPUT_DIR / "spotify_modeling_data.csv"
@@ -105,6 +106,8 @@ def run_ols_inference(data, features, group_name):
     medians = X.median()
     X = X.fillna(medians)
 
+    predictor_sd = X.std(ddof=0)
+
     # Add intercept
     X = sm.add_constant(X, has_constant="add")
 
@@ -128,6 +131,11 @@ def run_ols_inference(data, features, group_name):
         "CI_Lower_95": confidence_intervals.iloc[:, 0].values,
         "CI_Upper_95": confidence_intervals.iloc[:, 1].values
     })
+
+    scale = predictor_sd.reindex(results.params.index).to_numpy()
+    coefficient_table["Effect_Per_SD"] = coefficient_table["Coefficient"] * scale
+    coefficient_table["Effect_CI_Lower"] = coefficient_table["CI_Lower_95"] * scale
+    coefficient_table["Effect_CI_Upper"] = coefficient_table["CI_Upper_95"] * scale
 
     # Significance labels
     def significance(p):
@@ -268,3 +276,73 @@ print("=" * 70)
 print(f"Saved: {coefficient_file}")
 print(f"Saved: {summary_file}")
 print(f"Saved: {report_file}")
+
+
+# Figures for the report
+figure_dir = OUTPUT_DIR / "figures"
+figure_dir.mkdir(exist_ok=True)
+
+def save_figure(fig, filename):
+    fig.tight_layout()
+    fig.savefig(figure_dir / filename, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+metrics = pd.read_csv(OUTPUT_DIR / "model_evaluation_results.csv")
+feature_labels = {
+    "Group_A_Audio": "Audio",
+    "Group_C_Year": "Release year",
+    "Group_B_Audio_Year": "Audio + year",
+}
+rmse = metrics[metrics["Model"].eq("OLS")].set_index("Feature_Group")["RMSE"]
+rmse = rmse.reindex(feature_labels).rename(index=feature_labels)
+baseline_rmse = metrics.loc[metrics["Model"].eq("Mean Baseline"), "RMSE"].iloc[0]
+fig, ax = plt.subplots(figsize=(7, 4))
+bars = ax.bar(rmse.index, rmse, color=["#7aa6bd", "#64748b", "#147d73"])
+ax.bar_label(bars, fmt="%.2f", padding=3)
+ax.axhline(baseline_rmse, color="#475569", linestyle="--",
+           label=f"Mean baseline ({baseline_rmse:.2f})")
+ax.set(ylim=(0, baseline_rmse * 1.2), ylabel="Test RMSE (popularity points)",
+       title="OLS prediction error by feature set")
+ax.legend(frameon=False)
+save_figure(fig, "01_test_rmse.png")
+
+year_summary = train_data.groupby("year")[TARGET].agg(
+    median="median", q1=lambda values: values.quantile(0.25),
+    q3=lambda values: values.quantile(0.75)
+)
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot(year_summary.index, year_summary["median"], color="#147d73",
+        label="Median")
+ax.fill_between(year_summary.index, year_summary["q1"], year_summary["q3"],
+                color="#147d73", alpha=0.18, label="25th–75th percentile")
+ax.set(xlabel="Release year", ylabel="Popularity",
+       title="Popularity by release year (training data)")
+ax.legend(frameon=False)
+save_figure(fig, "02_popularity_by_year.png")
+
+continuous_features = [
+    "danceability", "energy", "loudness", "acousticness", "instrumentalness",
+    "liveness", "speechiness", "valence", "tempo", "log_duration"
+]
+effects = coefficient_results[coefficient_results["Variable"].isin(continuous_features)]
+adjusted = effects[effects["Feature_Group"].eq("Group_B_Audio_Year")]
+order = adjusted.sort_values("Effect_Per_SD", key=lambda x: x.abs())["Variable"]
+positions = np.arange(len(order))
+fig, ax = plt.subplots(figsize=(8, 5))
+for group, offset, color in [
+    ("Group_A_Audio", -0.13, "#64748b"),
+    ("Group_B_Audio_Year", 0.13, "#147d73"),
+]:
+    rows = effects[effects["Feature_Group"].eq(group)].set_index("Variable").loc[order]
+    estimates = rows["Effect_Per_SD"]
+    errors = [estimates - rows["Effect_CI_Lower"], rows["Effect_CI_Upper"] - estimates]
+    ax.errorbar(estimates, positions + offset, xerr=errors, fmt="o",
+                color=color, capsize=3, label=feature_labels[group])
+ax.axvline(0, color="#94a3b8", linewidth=1)
+ax.set_yticks(positions, labels=order.str.replace("_", " "))
+ax.set(xlabel="Popularity points per 1 SD increase (95% HC3 CI)",
+       title="Audio feature associations before and after adjusting for year")
+ax.legend(frameon=False)
+save_figure(fig, "03_audio_coefficients.png")
+effects.to_csv(figure_dir / "audio_effects.csv", index=False)
+
